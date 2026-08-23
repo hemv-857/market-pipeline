@@ -20,8 +20,8 @@ async def _roundtrip() -> dict:
     try:
         await r.delete(STREAM_QUOTES)
         await r.xgroup_destroy(STREAM_QUOTES, "feat-workers")
-    except Exception:
-        pass
+    except redis.ResponseError:
+        pass  # stream/group may not exist yet -- ensure_groups creates them next
 
     await ensure_groups(r)
     payload = {"event_id": "q-test-1", "ingest_ts": 1.0,
