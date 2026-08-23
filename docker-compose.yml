@@ -1,0 +1,42 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 5
+
+  ingestor:
+    build: .
+    command: mktflow-ingest
+    environment:
+      MKTFLOW_SYMBOL: btcusdt
+      MKTFLOW_REDIS: redis://redis:6379/0
+    depends_on:
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: mktflow-worker
+    environment:
+      MKTFLOW_REDIS: redis://redis:6379/0
+    depends_on:
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  api:
+    build: .
+    command: mktflow-api
+    environment:
+      MKTFLOW_REDIS: redis://redis:6379/0
+      PORT: "8000"
+    ports: ["8000:8000"]
+    depends_on:
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/healthz')"]
+      interval: 10s
+      retries: 5
