@@ -97,7 +97,9 @@ class Ingestor:
             return
 
         if self.sink_path:
-            with open(self.sink_path, "a") as fh:  # ponytail: line-buffered append; rotate later
+            # ponytail: blocking append inside async loop is fine at these rates;
+            # switch to aiofiles if throughput ever demands it
+            with open(self.sink_path, "a") as fh:
                 fh.write(json.dumps(payload) + "\n")
 
 

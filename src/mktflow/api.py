@@ -29,7 +29,7 @@ async def startup() -> None:
 async def healthz() -> dict:
     try:
         return {"ok": bool(await r.ping())}
-    except Exception:
+    except (ConnectionError, OSError):
         return {"ok": False}
 
 
@@ -61,7 +61,7 @@ async def ws_features(ws: WebSocket) -> None:
                     last_id = entry_id
                     MSG_OUT.inc()
                     await ws.send_text(fields["json"])
-    except Exception:
+    except (ConnectionError, OSError, RuntimeError):
         await ws.close()
 
 
