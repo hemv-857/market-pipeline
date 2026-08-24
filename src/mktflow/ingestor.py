@@ -70,7 +70,7 @@ class Ingestor:
         payload = {
             "event_id": event_id,
             "ingest_ts": now,
-            "exchange_ts": (data.get("T") or data.get("E") or 0),
+            "exchange_ts": ((data.get("T") or data.get("E") or 0) / 1000.0),  # ms -> sec
             "symbol": self.symbol.upper(),
         }
 
