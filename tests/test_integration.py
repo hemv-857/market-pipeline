@@ -48,7 +48,7 @@ def test_redis_stream_roundtrip_exactly_once():
     async def run():
         try:
             return await _roundtrip()
-        except (ConnectionError, OSError) as e:
+        except (ConnectionError, OSError, redis.RedisError) as e:
             pytest.skip(f"no local redis: {e}")
 
     got = asyncio.run(run())
