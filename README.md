@@ -1,5 +1,7 @@
 # mktflow
 
+<a href="https://github.com/hemv-857/market-pipeline/actions/workflows/ci.yml"><img src="https://github.com/hemv-857/market-pipeline/actions/workflows/ci.yml/badge.svg" alt="market-pipeline CI"></a> <a href="https://github.com/hemv-857/market-pipeline/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a> <img src="https://img.shields.io/badge/Python-3776AB.svg" alt="Python">
+
 Real-time crypto market data pipeline, deployed as containers:
 
 ```
@@ -40,3 +42,7 @@ curl localhost:8000/features/latest
   the API. All three are one-session upgrades when needed.
 - Latency numbers to quote: run `docker compose up` on a VPS, subscribe from a
   second host, report p50/p99 of `now - ingest_ts` over ≥1h.
+
+## License
+
+[LICENSE](https://github.com/hemv-857/market-pipeline/blob/master/LICENSE) — see the file for the full text.
