@@ -43,6 +43,10 @@ curl localhost:8000/features/latest
 - Latency numbers to quote: run `docker compose up` on a VPS, subscribe from a
   second host, report p50/p99 of `now - ingest_ts` over ≥1h.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 [LICENSE](https://github.com/hemv-857/market-pipeline/blob/master/LICENSE) — see the file for the full text.
